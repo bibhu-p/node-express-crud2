@@ -2,7 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const path = require('path');
+const app = express();
 
 const connectDB = require('./server/database/connection')
 const adminRoutes= require('./server/routes/adminRoutes')
@@ -12,18 +12,17 @@ const movieRoutes= require('./server/routes/movieRoutes')
 
 
 
-const app = express();
 
 dotenv.config({path:'config.env'})
 const PORT = process.env.PORT || 8181
 
-app.use(morgan('tiny'));
+// app.use(morgan('tiny'));
 
 // database connection
 connectDB();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended : true}))
+app.use(express.json());
+app.use(express.urlencoded({ extended : true}))
 
 
 app.get('/',(req, res)=>{
@@ -37,4 +36,4 @@ app.use('/api/movie',movieRoutes);
 
 
 
-app.listen(5000,()=> { console.log(`Server is running on http://localhost:${5000}`)});
+app.listen(PORT,()=> { console.log(`Server is running on http://localhost:${PORT}`)});

@@ -1,9 +1,7 @@
 var UserDb = require('../model/userModel');
 const jwt = require('jsonwebtoken');
 
-
 const bcrypt = require('bcrypt');
-
 
 const userController = {
     register: async (req, res) => {
@@ -46,10 +44,11 @@ const userController = {
             if (user.length > 0) {
                 bcrypt.compare(req.body.password, user[0].password).then((result) => {
                     if (result) {
-                        var privateKey = "privateKeyToUse";
-                        var authToken = jwt.sign({ id: user[0]._id }, privateKey);
-                        console.log(authToken);
-                        return res.status(200).send({ message: "Login Successful" });
+                        var authToken = jwt.sign({ id: user[0]._id }, process.env.PRIVATEKEY);
+                        // console.log(authToken);
+                        res.json(authToken);
+                        res.status(200).send({ message: "Login Successful" });
+                        return
                     } else {
                         return res.status(500).send({ message: "Invalid Password!" });
                     }

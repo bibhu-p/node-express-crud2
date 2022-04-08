@@ -21,12 +21,15 @@ const userSchema = new mongoose.Schema({
     adhaar :{
         type:Number,
         unique:true,
-        required:true
+        required:true,
+        max: 12
     },
     phone: {
         type:Number,
         required: true,
-        unique :true
+        unique :true,
+        min: [10, 'Must be at least 10 digits, got {VALUE}'],
+        max:12
     },
     movie :[{
 		type: mongoose.Schema.Types.ObjectId,

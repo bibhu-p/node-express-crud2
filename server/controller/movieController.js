@@ -1,13 +1,21 @@
 var MovieDb = require('../model/movieModel');
-
+const multer  = require('multer');
 
 const movieController ={
     // create
     create : async(req,res)=>{
+
+        // console.log(req.body)
+        // console.log(req.file)
+        // return res.send('ok');
+
         if(!req.body){
             res.status(400).send({message:"Content can't be empty! "});
             return;
         }
+        
+          
+        // const upload = multer({ storage: storage })
         
         const movie = new MovieDb({
             name : req.body.name,
@@ -16,6 +24,7 @@ const movieController ={
             heroine : req.body.heroine,
             producer : req.body.producer
         })
+
 
         movie.save(movie).then(data =>{
             res.send(data)
@@ -80,6 +89,39 @@ const movieController ={
             res.status(500).send({message:"Error During Delete.."});
         });
     }
+    // uploadPoster : async (req,res)=>{
+    //     // var file = req.body.posterUrl;
+    //     // const storage = multer.diskStorage({
+    //     //         destination: function (req, file, cb) {
+    //     //         cb(null, '/assets/uploads')
+    //     //         },
+    //     //         filename: function (req, file, cb) {
+    //     //         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    //     //         cb(null, file.fieldname + '-' + uniqueSuffix)
+    //     //         }
+    //     //     })
+
+    //     // const upload = multer({storage: storage }).single("poster");
+    //     const upload = multer({dest: 'uploads/' }).single("poster");
+    //     upload(req, res, (err) => {
+    //         if(err) {
+    //           res.status(400).send("Something went wrong!");
+    //         }
+    //         console.log("Uploaded >>>>>>>>>>>>>.");
+    //         // const storage = multer.diskStorage({
+    //         //     destination: function (req, file, cb) {
+    //         //     cb(null, '/assets/uploads')
+    //         //     },
+    //         //     filename: function (req, file, cb) {
+    //         //     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    //         //     cb(null, file.fieldname + '-' + uniqueSuffix)
+    //         //     }
+    //         // })
+    //         res.send(req.body);
+    //       });
+
+        
+    // }
 }
 
 module.exports = movieController
