@@ -17,6 +17,8 @@ const adminController = {
         const hash = bcrypt.hashSync(password, saltRounds);
         console.log(hash);
 
+        
+
         const admin = new AdminDb({
             name: req.body.name,
             email: req.body.email,

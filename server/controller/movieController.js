@@ -8,7 +8,7 @@ const movieController ={
             res.status(400).send({message:"Content can't be empty! "});
             return;
         }
-
+        
         const movie = new MovieDb({
             name : req.body.name,
             director : req.body.director,
