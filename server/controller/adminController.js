@@ -8,8 +8,7 @@ const adminController = {
 
 
         if (!req.body) {
-            res.status(400).send({ message: "Content can't be empty! " });
-            return;
+            return res.status(400).send({ message: "Content can't be empty! " });
         }
         const saltRounds = 12;
         const password = req.body.password;
@@ -26,17 +25,17 @@ const adminController = {
         })
 
         admin.save(admin).then(data => {
-            res.send(data)
+            return res.send(data);
         }).catch(err => {
-            res.status(500).send({
+            return res.status(500).send({
                 message: err.message || "Error During Creation ......"
             });
         });
     },
     login: async (req, res) => {
         if (!req.body) {
-            res.status(400).send({ message: " Enter all the fields! " });
-            return;
+            return res.status(400).send({ message: " Enter all the fields! " });
+            
         }
         await  AdminDb.find({ email: req.body.email }).then(admin => {
             if (admin.length > 0) {
@@ -52,7 +51,7 @@ const adminController = {
                 return res.status(500).send({ message: "User Not Found !" });
             }
         }).catch(err => {
-            return res.status(404).send({ message: err.message || "Data not found" })
+            return res.status(404).send({ message: err.message || "Data not found" });
         });
     }
 }

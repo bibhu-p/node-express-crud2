@@ -1,5 +1,5 @@
 var MovieDb = require('../model/movieModel');
-const multer  = require('multer');
+// const multer  = require('multer');
 
 const movieController ={
     // create
@@ -10,8 +10,7 @@ const movieController ={
         // return res.send('ok');
 
         if(!req.body){
-            res.status(400).send({message:"Content can't be empty! "});
-            return;
+            return res.status(400).send({message:"Content can't be empty! "});
         }
         
           
@@ -27,9 +26,9 @@ const movieController ={
 
 
         movie.save(movie).then(data =>{
-            res.send(data)
+            return res.send(data)
         }).catch(err =>{
-            res.status(500).send({
+            return res.status(500).send({
                 message:err.message || "Error During Creation ......"
             });
         });
@@ -38,11 +37,11 @@ const movieController ={
     // retrieve
     find :async (req,res)=>{
         await MovieDb.find().then(movie =>{
-            res.send(movie)
+            return res.send(movie);
         }).catch(err =>{
-            res.status(500).send({
+           return res.status(500).send({
                 message:err.message || "Error During Searching.."
-            })
+            });
         });
     },
     findById: async(req,res)=>{
@@ -50,11 +49,11 @@ const movieController ={
             const id = req.params.id;
             await MovieDb.findById(id).then(data =>{
                 if(!data){
-                    res.status(404).send({message:`Movie Not Found ${id}`})
+                    return res.status(404).send({message:`Movie Not Found ${id}`});
                 }else{
-                    res.send(data)
+                    return res.send(data);
                 }}).catch(err =>{
-                    res.status(500).send({message:"Error .."});
+                    return res.status(500).send({message:"Error .."});
                 });
         }else{
             return res.status(400).send({message:`Movie Id missing`});
@@ -69,24 +68,24 @@ const movieController ={
         await MovieDb.findByIdAndUpdate(id,req.body,{userFindAndModify:false})
         .then(data =>{
             if(!data){
-                res.status(404).send({message:`User Not Found ${id}`})
+               return res.status(404).send({message:`User Not Found ${id}`})
             }else{
-                res.send(data)
+                return res.send(data);
             }
         }).catch(err =>{
-            res.status(500).send({message:"Error During Update.."});
+            return res.status(500).send({message:"Error During Update.."});
         });
     },
     delete :async (req,res)=>{
         const id = req.params.id;
         await MovieDb.findByIdAndDelete(id).then(data =>{
             if(!data){
-                res.status(404).send({message:`User Not Found ${id}`})
+                return res.status(404).send({message:`User Not Found ${id}`});
             }else{
-                res.send({message:"User Deleted Successfully..."})
+               return res.send({message:"User Deleted Successfully..."});
             }
             }).catch(err =>{
-            res.status(500).send({message:"Error During Delete.."});
+            return res.status(500).send({message:"Error During Delete.."});
         });
     }
     // uploadPoster : async (req,res)=>{

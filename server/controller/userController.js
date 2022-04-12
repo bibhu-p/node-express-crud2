@@ -37,8 +37,7 @@ const userController = {
     },
     login: async (req, res) => {
         if (!req.body) {
-            res.status(400).send({ message: " Enter all the fields! " });
-            return;
+            return res.status(400).send({ message: " Enter all the fields! " });
         }
         await UserDb.find({ email: req.body.email }).then(user => {
             if (user.length > 0) {
@@ -46,9 +45,7 @@ const userController = {
                     if (result) {
                         var authToken = jwt.sign({ id: user[0]._id }, process.env.PRIVATEKEY);
                         // console.log(authToken);
-                        res.json(authToken);
-                        res.status(200).send({ message: "Login Successful" });
-                        return
+                        return res.status(200).json({success:true, data:user,token:authToken});
                     } else {
                         return res.status(500).send({ message: "Invalid Password!" });
                     }
@@ -132,12 +129,12 @@ const userController = {
         UserDb.findByIdAndDelete(id).then(data => {
 
             if (!data) {
-                res.status(404).send({ message: `User Not Found ${id}` })
+                return res.status(404).send({ message: `User Not Found ${id}` })
             } else {
-                res.send({ message: "User Deleted Successfully..." })
+                return res.send({ message: "User Deleted Successfully..." })
             }
         }).catch(err => {
-            res.status(500).send({ message: "Error During Delete.." });
+            return res.status(500).send({ message: "Error During Delete.." });
         });
     }
 }

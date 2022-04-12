@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended : true}))
 
 
 app.get('/',(req, res)=>{
-    res.send("Crud Application 2");
+   return res.send("Crud Application 2");
 })
 
 // routers
