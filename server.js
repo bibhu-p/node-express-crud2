@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
 
 const connectDB = require('./server/database/connection')
@@ -20,7 +21,7 @@ const PORT = process.env.PORT || 8181
 
 // database connection
 connectDB();
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended : true}))
 
