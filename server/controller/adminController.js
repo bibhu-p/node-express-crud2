@@ -1,5 +1,6 @@
 var AdminDb = require('../model/adminModel');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 
 const adminController = {
@@ -41,7 +42,9 @@ const adminController = {
             if (admin.length > 0) {
                 bcrypt.compare(req.body.password, admin[0].password).then((result) => {
                     if (result) {
-                        return res.status(200).send({ message: "Login Successful" });
+                        var authToken = jwt.sign({ id: admin[0]._id }, process.env.PRIVATEKEY);
+
+                        return res.status(200).json({success:true, data:result,token:authToken });
                     } else {
                         return res.status(500).send({ message: "Invalid Password!" });
                     }

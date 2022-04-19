@@ -17,7 +17,7 @@ const movieRoutes= require('./server/routes/movieRoutes')
 dotenv.config({path:'config.env'})
 const PORT = process.env.PORT || 8181
 
-// app.use(morgan('tiny'));
+app.use(morgan('tiny'));
 
 // database connection
 connectDB();
