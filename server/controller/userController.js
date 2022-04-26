@@ -124,7 +124,7 @@ const userController = {
 
     },
     delete: async (req, res) => {
-        const id = req.query.id;
+        const id = req.params.id;
 
         UserDb.findByIdAndDelete(id).then(data => {
 
