@@ -45,7 +45,7 @@ const userController = {
                     if (result) {
                         var authToken = jwt.sign({ id: user[0]._id }, process.env.PRIVATEKEY);
                         // console.log(authToken);
-                        return res.status(200).json({success:true, data:user,token:authToken});
+                        return res.status(200).json({success:true, data:user[0],token:authToken});
                     } else {
                         return res.status(500).send({ message: "Invalid Password!" });
                     }

@@ -44,7 +44,7 @@ const adminController = {
                     if (result) {
                         var authToken = jwt.sign({ id: admin[0]._id }, process.env.PRIVATEKEY);
 
-                        return res.status(200).json({success:true, data:result,token:authToken });
+                        return res.status(200).json({success:true, data:admin[0],token:authToken });
                     } else {
                         return res.status(500).send({ message: "Invalid Password!" });
                     }
