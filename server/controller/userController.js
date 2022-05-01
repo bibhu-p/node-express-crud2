@@ -123,6 +123,25 @@ const userController = {
         }
 
     },
+    // updateMovie :async (req, res)=>{
+    //     if (!req.body) {
+    //         return res.status(400).send({ message: "Update data can't be empty..." });
+    //     }
+    //     const body = req.body;
+    //     const id = req.params.id;
+
+    //     try {
+    //         await UserDb.findOneAndUpdate({
+    //         _id: id
+    //         },{
+    //             $push:{
+    //                 movie: body,
+    //             }
+    //         })
+    //     }catch (err) {
+    //         return res.status(500).json({ success: false, message: err });
+    //     }
+    // },
     delete: async (req, res) => {
         const id = req.params.id;
 
