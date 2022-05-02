@@ -124,20 +124,20 @@ const userController = {
 
     },
     updateMovie :async (req, res)=>{
-        if (!req.body) {
-            return res.status(400).send({ message: "Update data can't be empty..." });
-        }
         const body = req.body;
         const id = req.params.id;
-
+        if (!body && !id) {
+            return res.status(400).json({ success: false, message: "Update data can't be empty..." });
+        }
         try {
-            await UserDb.updateMany({
+            const updateData = await UserDb.updateOne({
             _id: id
             },{
-                $push:{
-                    movie: body,
-                }
-            })
+                $addToSet:{
+                    movie: {$each:body}}})
+            if (updateData) {
+                return res.status(200).json({ success: true, message: "Data updated", data: updateData });
+            }
         }catch (err) {
             return res.status(500).json({ success: false, message: err });
         }
