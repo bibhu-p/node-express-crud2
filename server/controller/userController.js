@@ -61,7 +61,7 @@ const userController = {
     find: async (req, res) => {
         UserDb.find().populate('movie').exec((err, user) => {
             if (user) {
-                return res.status(200).send(user);
+                return res.status(200).json({ success: true, message: "All user Data", data: user });;
             } else {
                 return res.send({ message: err.message });
             }
